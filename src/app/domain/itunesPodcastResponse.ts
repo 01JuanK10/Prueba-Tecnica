@@ -8,6 +8,6 @@ export interface PodcastResults{
     description: string;
     artistName: string;
     trackName: string;
-    artworkUrl100: string;
+    artworkUrl600: string;
     feedUrl: string;
 }

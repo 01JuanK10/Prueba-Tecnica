@@ -4,7 +4,7 @@ import { itunesResponse } from '../domain/ItunesResponse';
 import { itunesPodcastResponse } from '../domain/itunesPodcastResponse';
 import { Podcast } from '../domain/Podcast';
 
-
+const URL_ALL_ORIGINS = 'https://api.allorigins.win/raw?url=';
 const URL_PODCASTS = 'https://itunes.apple.com/us/rss/toppodcasts/limit=10/genre=1310/json';
 const URL_DETALLES_PODCAST = 'https://itunes.apple.com/lookup?id=';
 
@@ -21,10 +21,12 @@ export class ServicioHttp {
   }
 
   obtenerDetallesPodcast(podcastId: string){
-    return this.http.get<itunesPodcastResponse>(URL_DETALLES_PODCAST + podcastId);
+    const URL = URL_ALL_ORIGINS + encodeURIComponent(URL_DETALLES_PODCAST + podcastId);
+    return this.http.get<itunesPodcastResponse>(URL, { responseType: 'json' });
   }
 
   obtenerListaEpisodios(podcastId: string){
-    return this.http.get<itunesPodcastResponse>(URL_DETALLES_PODCAST + podcastId + '&entity=podcastEpisode');
+    const URL = URL_ALL_ORIGINS + encodeURIComponent(URL_DETALLES_PODCAST + podcastId + '&entity=podcastEpisode');
+    return this.http.get<itunesPodcastResponse>(URL, { responseType: 'json' });
   }
 }

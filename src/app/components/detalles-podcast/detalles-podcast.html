@@ -1,6 +1,28 @@
 <div class="divisor">
-    <div class="izquierda"></div>
+    <div class="izquierda">
+        <div class="card" style="width: 12rem;">
+            <img src="{{podcast.urlImagen}}" class="card-img-top" alt="Imagen de {{podcast.titulo}}">
+            <div class="card-body">
+                <h5>{{podcast.titulo}}</h5>
+                <p>{{podcast.autor}}</p>
+            </div>
+        </div>
+    </div>
     <div class="derecha">
+        <div class="card">
+            <h2>Episodes: {{cantidadEpisodios}}</h2>
+        </div>
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Duration</th>
+                    </tr>
+                </thead>                
+            </table>
+        </div>
         <router-outlet></router-outlet>    
     </div>
 </div>

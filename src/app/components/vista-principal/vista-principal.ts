@@ -40,8 +40,9 @@ export class VistaPrincipal implements OnInit{
     });
   }
 
-  OnClickPodcast(podcastId: string){
+  OnClickPodcast(podcastId: string, podcast: Podcast){
     console.log('Podcast seleccionado con ID:', podcastId);
-    this.router.navigate(['/podcast'], { queryParams: { id: podcastId } }); 
+    localStorage.setItem('podcastSeleccionado', JSON.stringify(podcast));
+    this.router.navigate([`/podcast/${podcastId}`]); 
   }
 }
