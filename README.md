@@ -6,6 +6,8 @@ Este proyecto fue creado utilizando **[Angular CLI](https://github.com/angular/a
 
 ## Ejecución con Angular CLI
 
+En el directorio raíz del proyecto, ejecuta los siguientes comandos:
+
 Para ejecutar la aplicación de forma local usando Angular CLI, primero debes instalar las dependencias del proyecto:
 
 ```bash
