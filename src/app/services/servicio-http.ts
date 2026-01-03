@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { itunesResponse } from '../domain/ItunesResponse';
 
 
 const URL_PODCASTS = 'https://itunes.apple.com/us/rss/toppodcasts/limit=10/genre=1310/json';
@@ -15,14 +16,14 @@ export class ServicioHttp {
   http = inject(HttpClient);
 
   obtenerListaPodcasts() {
-    return this.http.get(URL_PODCASTS);
+    return this.http.get<itunesResponse>(URL_PODCASTS);
   }
 
   obtenerDetallesPodcast(podcastId: string){
-    return this.http.get(URL_DETALLES_PODCAST + podcastId);
+    return this.http.get<{}>(URL_DETALLES_PODCAST + podcastId);
   }
 
   obtenerListaEpisodios(podcastId: string){
-    return this.http.get(URL_DETALLES_PODCAST + podcastId + '&entity=podcastEpisode');
+    return this.http.get<{}>(URL_DETALLES_PODCAST + podcastId + '&entity=podcastEpisode');
   }
 }
