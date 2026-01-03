@@ -1,59 +1,69 @@
-# PruebaTecnica
+# Prueba Técnica
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+Este proyecto fue creado utilizando **[Angular CLI](https://github.com/angular/angular-cli)** versión **21.0.4**.
 
-## Development server
+---
 
-To start a local development server, run:
+## Ejecución con Angular CLI
+
+Para ejecutar la aplicación de forma local usando Angular CLI, primero debes instalar las dependencias del proyecto:
+
+```bash
+npm install
+```
+
+Una vez instaladas, puedes iniciar la aplicación con el siguiente comando:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Si deseas que la aplicación se abra automáticamente en el navegador, utiliza:
 
 ```bash
-ng generate component component-name
+ng serve -o
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+La aplicación estará disponible en:
+
+```
+http://localhost:4200/
+```
+
+---
+
+## Ejecución con Docker
+
+Si no tienes Angular CLI configurado o instalado en tu sistema, puedes ejecutar la aplicación utilizando **Docker**.
+
+### 1. Construcción de la imagen
+
+Desde el directorio raíz del proyecto, construye la imagen con el siguiente comando:
 
 ```bash
-ng generate --help
+docker build -t prueba-tecnica .
 ```
 
-## Building
+### 2. Ejecución del contenedor
 
-To build the project run:
+Una vez finalizada la construcción de la imagen, ejecuta el contenedor con:
 
 ```bash
-ng build
+docker run -d -p 4200:4200 prueba-tecnica
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Si en la consola aparece un hash similar al siguiente:
 
 ```bash
-ng test
+a505b5d13bddd0420f068714d63ff18835028450a072bd65ed0047e8048a5e4e
 ```
 
-## Running end-to-end tests
+significa que el contenedor se está ejecutando correctamente.
 
-For end-to-end (e2e) testing, run:
+Finalmente, abre tu navegador y accede a la aplicación desde:
 
-```bash
-ng e2e
+```
+http://localhost:4200/
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
