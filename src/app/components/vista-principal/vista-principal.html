@@ -1,5 +1,5 @@
 <div class="cuadricula">
-    @for (item of PodcastList; track item.id) {
+    @for (item of podcastList(); track item.id) {
         <div class="card podcast-card" style="width: 12rem;" (click)="OnClickPodcast(item.id)">
             <div class="image-wrapper">
                 <img src="{{ item.urlImagen }}"

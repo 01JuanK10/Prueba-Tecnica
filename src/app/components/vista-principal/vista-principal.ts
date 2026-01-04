@@ -1,7 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ServicioHttp } from '../../services/servicio-http';
 import { Podcast } from '../../domain/Podcast';
 import { Router } from '@angular/router';
+import { Sign } from 'crypto';
 
 @Component({
   selector: 'app-vista-principal',
@@ -12,13 +13,14 @@ import { Router } from '@angular/router';
 
 export class VistaPrincipal implements OnInit{
   http = inject(ServicioHttp);
-  PodcastList: Podcast[] = [];
-
+  podcastList = signal<Podcast[]>([]);
   router = inject(Router);
 
   ngOnInit(): void {
+    console.log('Componente VistaPrincipal inicializado');
     this.http.obtenerListaPodcasts().subscribe({
       next: (data) => {
+        let podcastList: Podcast[] = [];
         data['feed']['entry'].forEach((item: any) => {
           const podcast: Podcast = {
             id: item['id']['attributes']['im:id'],
@@ -27,8 +29,9 @@ export class VistaPrincipal implements OnInit{
             autor: item['im:artist']['label'],
             descripcion: item['summary']['label'],
           };
-          this.PodcastList.push(podcast);
+          podcastList.push(podcast);
         });
+        this.podcastList.set(podcastList);
       },
       error: (error) => {
         console.error('Error al obtener la lista de podcasts:', error);
