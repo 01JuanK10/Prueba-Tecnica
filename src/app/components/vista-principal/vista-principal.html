@@ -1,7 +1,7 @@
 <div class="cuadricula">
     @for (item of PodcastList; track item.id) {
-        <div class="card" style="width: 15rem;" (click)="OnClickPodcast(item.id, item)">
-            <img src="{{item.urlImagen}}" class="card-img-top" alt="Imagen de {{item.titulo}}">
+        <div class="card" style="width: 12rem;" (click)="OnClickPodcast(item.id)">
+            <img src="{{item.urlImagen}}" class="card-img-top" alt="Imagen de {{item.titulo}}" style="height: 12rem; object-fit: cover;">
             <div class="card-body">
                 <h5>{{item.titulo}}</h5>
                 <p>{{item.autor}}</p>
