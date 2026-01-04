@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ServicioHttp } from '../../services/servicio-http';
-import { Podcast } from '../../domain/Podcast';
+import { Episodio, Podcast } from '../../domain/Podcast';
 import { RouterOutlet } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-detalles-podcast',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, DatePipe],
   templateUrl: './detalles-podcast.html',
   styleUrl: './detalles-podcast.css',
 })
@@ -15,7 +16,7 @@ export class DetallesPodcast implements OnInit {
 
   podcast!: Podcast;
   cantidadEpisodios: number = 0;
-  episodios: any[] = [];
+  episodios: Episodio[] = [];
   constructor(){
     this.podcast = {
       id: '',
@@ -42,8 +43,19 @@ export class DetallesPodcast implements OnInit {
 
     this.http.obtenerListaEpisodios('1535809341').subscribe((data) => {
       console.log(data);
-      this.cantidadEpisodios = data.resultCount - 1; // Resto 1 porque el primer resultado es el podcast en sí
-      console.log('Cantidad de episodios: ' + this.cantidadEpisodios);
+      this.cantidadEpisodios = data.resultCount - 1;
+      this.episodios = data.results.slice(1).map((elemento) =>{
+        return {
+          id: elemento.trackId.toString(),
+          titulo: elemento.trackName,
+          duracion: elemento.trackTimeMillis ? Math.floor(elemento.trackTimeMillis / 60000) + ' min' : 'Desconocida',
+          fechaPublicacion: elemento.releaseDate,
+          descripcion: elemento.description,
+          urlAudio: elemento.previewUrl,
+        }
+      });
+      console.log(this.cantidadEpisodios);
+      console.log(this.episodios);
     });
   }
 }
