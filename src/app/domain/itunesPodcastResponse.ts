@@ -10,4 +10,7 @@ export interface PodcastResults{
     trackName: string;
     artworkUrl600: string;
     feedUrl: string;
+    trackTimeMillis: number;
+    releaseDate: string;
+    previewUrl: string;
 }
