@@ -17,13 +17,13 @@ npm install
 Una vez instaladas, puedes iniciar la aplicación con el siguiente comando:
 
 ```bash
-ng serve
+ng serve --proxy-config proxy.conf.json
 ```
 
 Si deseas que la aplicación se abra automáticamente en el navegador, utiliza:
 
 ```bash
-ng serve -o
+ng serve -o --proxy-config proxy.conf.json
 ```
 
 La aplicación estará disponible en:
