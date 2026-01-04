@@ -1,8 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Signal } from '@angular/core';
 import { ServicioHttp } from '../../services/servicio-http';
 import { Episodio, Podcast } from '../../domain/Podcast';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-detalles-podcast',
@@ -12,50 +13,22 @@ import { DatePipe } from '@angular/common';
 })
 export class DetallesPodcast implements OnInit {
 
-  http = inject(ServicioHttp);
-
+  private route = inject(ActivatedRoute)
+  private data = toSignal(this.route.data)
   podcast!: Podcast;
   cantidadEpisodios: number = 0;
   episodios: Episodio[] = [];
-  constructor(){
-    this.podcast = {
-      id: '',
-      urlImagen: '',
-      titulo: '',
-      autor: '',
-      descripcion: '',
-    };
-  }
 
   ngOnInit(): void {
-    this.http.obtenerDetallesPodcast('1535809341').subscribe((data) => {
-      console.log(data);
-      this.podcast = {
-        id: data.results[0].trackId.toString(),
-        urlImagen: data.results[0].artworkUrl600,
-        titulo: data.results[0].trackName,
-        autor: data.results[0].artistName,
-        descripcion: data.results[0].description,
-      };
+    console.log(this.route.data)
+    let data = this.data()!;
+    data as { podcastInfo: {podcast: Podcast, cantidadEpisodios: number, episodios: Episodio[] } };
+    console.log(data)
+    if(data && data['podcastInfo']){
+      this.podcast = data['podcastInfo']['podcast'];
+      this.cantidadEpisodios = data['podcastInfo']['cantidadEpisodios'];
+      this.episodios = data['podcastInfo']['episodios'];
+    }
 
-      console.log(this.podcast)
-    });
-
-    this.http.obtenerListaEpisodios('1535809341').subscribe((data) => {
-      console.log(data);
-      this.cantidadEpisodios = data.resultCount - 1;
-      this.episodios = data.results.slice(1).map((elemento) =>{
-        return {
-          id: elemento.trackId.toString(),
-          titulo: elemento.trackName,
-          duracion: elemento.trackTimeMillis ? Math.floor(elemento.trackTimeMillis / 60000) + ' min' : 'Desconocida',
-          fechaPublicacion: elemento.releaseDate,
-          descripcion: elemento.description,
-          urlAudio: elemento.previewUrl,
-        }
-      });
-      console.log(this.cantidadEpisodios);
-      console.log(this.episodios);
-    });
   }
 }
