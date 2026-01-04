@@ -19,9 +19,6 @@ export class VistaPrincipal implements OnInit{
   ngOnInit(): void {
     this.http.obtenerListaPodcasts().subscribe({
       next: (data) => {
-        console.log('Lista de podcasts obtenida');
-        console.log(data);
-
         data['feed']['entry'].forEach((item: any) => {
           const podcast: Podcast = {
             id: item['id']['attributes']['im:id'],
@@ -32,7 +29,6 @@ export class VistaPrincipal implements OnInit{
           };
           this.PodcastList.push(podcast);
         });
-        console.log(this.PodcastList);
       },
       error: (error) => {
         console.error('Error al obtener la lista de podcasts:', error);
