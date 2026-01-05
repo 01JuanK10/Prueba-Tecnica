@@ -1,3 +1,10 @@
+<div id="div-filtro">
+    <input id="input-filtro"type="text" (input)="filtrarPodcasts($event.target.value)">
+    <div id="contador-podcast">
+            <p>{{cantidadLista()}}</p>
+    </div>
+</div>
+
 <div class="cuadricula">
     @for (item of podcastList(); track item.id) {
         <div class="card podcast-card" style="width: 12rem;" (click)="OnClickPodcast(item.id)">

@@ -14,7 +14,9 @@ import { Sign } from 'crypto';
 export class VistaPrincipal implements OnInit{
   http = inject(ServicioHttp);
   podcastList = signal<Podcast[]>([]);
+  podcastsIniciales: Podcast[] = [];
   router = inject(Router);
+  cantidadLista = signal<number>(0)
 
   ngOnInit(): void {
     console.log('Componente VistaPrincipal inicializado');
@@ -31,7 +33,9 @@ export class VistaPrincipal implements OnInit{
           };
           podcastList.push(podcast);
         });
+        this.podcastsIniciales = podcastList
         this.podcastList.set(podcastList);
+        this.cantidadLista.set(podcastList.length)
       },
       error: (error) => {
         console.error('Error al obtener la lista de podcasts:', error);
@@ -42,5 +46,21 @@ export class VistaPrincipal implements OnInit{
   OnClickPodcast(podcastId: string){
     console.log('Podcast seleccionado con ID:', podcastId);
     this.router.navigate([`/podcast/${podcastId}`]); 
+  }
+
+  filtrarPodcasts(filtro: string){
+    
+    if(filtro.length !== 0){
+      filtro = filtro.toLowerCase();
+      let listaFiltrada = (this.podcastsIniciales.filter((podcast) => 
+          podcast.autor.toLowerCase().includes(filtro) || podcast.titulo.toLowerCase().includes(filtro))
+        );
+      this.podcastList.set(listaFiltrada)
+      this.cantidadLista.set(listaFiltrada.length);
+    }else{
+      this.podcastList.set(this.podcastsIniciales);
+      this.cantidadLista.set(this.podcastsIniciales.length)
+    }
+
   }
 }
